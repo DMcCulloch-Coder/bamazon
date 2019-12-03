@@ -11,11 +11,21 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) console.log(err)
-    console.log(`Connected as id ${connection.threadId}`)
-    startApp();
+    console.log(`Connected as id ${connection.threadId}`) //test
+    readDb();
 })
 
-function startApp() {
-    console.log('start')
-    connection.end()
+function readDb() {
+    console.log('start') //test
+    connection.query('Select * FROM products', (err, res) => {
+        if(err) {
+            return console.log(err)
+        }
+        res.forEach(product => {
+            console.log(product.product_name)
+            console.log(product.price.toFixed(2))
+            
+        })
+        
+    })
 }
