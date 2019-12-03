@@ -1,0 +1,29 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:customer": "nodemon bamazonCustomer.js",
+    "dev:manager": "nodemon bamazonManager.js",
+    "dev:supervisor": "nodemon bamazonSupervisor.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DMcCulloch-Coder/bamazon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DMcCulloch-Coder/bamazon/issues"
+  },
+  "homepage": "https://github.com/DMcCulloch-Coder/bamazon#readme",
+  "dependencies": {
+    "inquirer": "^7.0.0",
+    "mysql": "^2.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
+}
