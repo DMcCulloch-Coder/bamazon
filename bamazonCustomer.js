@@ -44,7 +44,15 @@ function readDb() {
     })
 }
 
-function makeOrder(id, quantity) {
-    console.log(id) //test
-    console.log(quantity) //test
+function makeOrder(productId, quantity) {
+    console.log(productId)
+    connection.query('SELECT FROM products WHERE ?', { id: '3' }, (err, res) => {
+        if (err) {
+            return console.log(err)
+        }
+        
+        console.log("res: " + res.stock_quantity)
+    })
+    //console.log(productId) //test
+    //console.log(quantity) //test
 }
