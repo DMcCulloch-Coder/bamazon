@@ -44,7 +44,39 @@ function readDb() {
     })
 }
 
-function makeOrder(id, quantity) {
-    console.log(id) //test
-    console.log(quantity) //test
+function makeOrder(productId, quantity) {
+    console.log(productId)
+    connection.query('SELECT * FROM products WHERE ?', { id: '3' }, (err, res) => {
+        if (err) {
+            return console.log(err)
+        }
+        if(quantity > res[0].stock_quantity) {
+            return console.log('Insufficent Quantity')
+        }
+        let total = res[0].stock_quantity - quantity
+        console.log(`total: ${total}`) //test
+
+        adjustStock(res[0].id, total);
+
+    })
+}
+
+function adjustStock(itemId, total) {
+    // adjust stock
+    connection.query('UPDATE products SET ? WHERE ?', [
+        {
+            stock_quantity: total
+        },
+        {
+            id: itemId
+        }
+    ], (err, res) => {
+        if (err) console.log(err)
+        console.log(res)
+    })
+
+
+
+    // display total cost!!!
+    // connection.end();
 }
