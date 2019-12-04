@@ -2,6 +2,8 @@ const mysql = require('mysql');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 
+let finalPrice;
+
 const connection = mysql.createConnection({
     host: "127.0.0.1",
     port: 3306,
@@ -45,16 +47,18 @@ function readDb() {
 }
 
 function makeOrder(productId, quantity) {
-    console.log(productId)
-    connection.query('SELECT * FROM products WHERE ?', { id: '3' }, (err, res) => {
+
+    connection.query('SELECT * FROM products WHERE ?', { id: `${productId}` }, (err, res) => {
         if (err) {
+            connection.end();
             return console.log(err)
         }
+        finalPrice = quantity * res[0].price
         if(quantity > res[0].stock_quantity) {
+            connection.end();
             return console.log('Insufficent Quantity')
         }
         let total = res[0].stock_quantity - quantity
-        console.log(`total: ${total}`) //test
 
         adjustStock(res[0].id, total);
 
@@ -62,7 +66,7 @@ function makeOrder(productId, quantity) {
 }
 
 function adjustStock(itemId, total) {
-    // adjust stock
+    
     connection.query('UPDATE products SET ? WHERE ?', [
         {
             stock_quantity: total
@@ -71,12 +75,11 @@ function adjustStock(itemId, total) {
             id: itemId
         }
     ], (err, res) => {
-        if (err) console.log(err)
-        console.log(res)
+        if (err) {
+            connection.end();
+            return console.log(err)
+        }
+        console.log(`Final Price: ${finalPrice}`)
+        connection.end();
     })
-
-
-
-    // display total cost!!!
-    // connection.end();
 }
