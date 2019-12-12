@@ -26,3 +26,7 @@ Tech Used:
 -Node js
 -NPM js
 -mysql, inquirer, and nodemon npm packages
+
+----------------------------
+
+![Demo Gif](./video.gif)
